@@ -1,0 +1,200 @@
+/* style.css */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* New weathering background gradient: cool grays to deep, muted blue */
+    background: linear-gradient(135deg, #4b6587, #2d3e50, #1a2a3a); /* Muted blue-gray to deep slate */
+    color: #e2e8f0; /* Soft white/off-white for main text */
+    overflow: hidden; /* Prevent scrollbar if not needed */
+}
+
+.card {
+    /* Slightly less transparent, more solid feel */
+    background: rgba(30, 40, 50, 0.9); /* Dark, muted blue-gray */
+    padding: 2.5em; /* Increased padding */
+    border-radius: 20px;
+    width: 100%;
+    max-width: 420px; /* Slightly narrower card for focus */
+    margin: 1.5em; /* Increased margin */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6); /* Deeper shadow */
+    backdrop-filter: blur(8px); /* More blur */
+    -webkit-backdrop-filter: blur(8px);
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle white border */
+}
+
+.search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5em; /* More space */
+}
+
+.search-bar {
+    border: none;
+    outline: none;
+    padding: 0.8em 1.2em; /* More padding */
+    border-radius: 25px; /* More rounded */
+    background: rgba(255, 255, 255, 0.1); /* Lighter transparency */
+    color: #e2e8f0;
+    font-size: 1.05em; /* Slightly larger font */
+    width: 75%; /* Slightly wider input */
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-bar::placeholder {
+    color: rgba(255, 255, 255, 0.5); /* Lighter placeholder */
+}
+
+.search-bar:focus {
+    background: rgba(255, 255, 255, 0.15); /* Slightly lighter on focus */
+    box-shadow: 0 0 0 2px #82c4c3; /* Subtle light blue focus ring */
+}
+
+.search-btn {
+    margin-left: 12px; /* More space */
+    padding: 0.8em 1.5em; /* More padding */
+    border-radius: 25px;
+    border: none;
+    background-color: #82c4c3; /* Muted teal/light blue for button */
+    color: #1a2a3a; /* Dark text for contrast */
+    font-weight: bold;
+    font-size: 1.05em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.search-btn:hover {
+    background-color: #68b0af; /* Slightly darker on hover */
+    transform: translateY(-2px); /* Lift effect */
+}
+
+.search-btn:active {
+    transform: translateY(0);
+}
+
+.weather {
+    opacity: 1; /* Start visible for initial load */
+    transition: opacity 0.5s ease-in-out;
+}
+
+.weather.loading {
+    visibility: hidden; /* Hide the content directly */
+    opacity: 0; /* Fade out when loading */
+    max-height: 20px; /* Collapse content */
+    pointer-events: none; /* Prevent interaction while loading */
+    position: relative; /* For the :after pseudo-element */
+    transition: opacity 0.5s ease-in-out, visibility 0s 0.5s; /* Delay visibility change */
+}
+
+.weather.loading:after {
+    visibility: visible; /* Show the loading text */
+    content: "Loading...";
+    color: #82c4c3; /* Loading message in accent color */
+    font-size: 1.2em;
+    position: absolute;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust for perfect centering */
+    animation: pulse 1.5s infinite ease-in-out; /* Pulsing effect for loading */
+    transition: visibility 0s; /* No delay for visibility change */
+}
+
+@keyframes pulse {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
+}
+
+.city {
+    font-size: 2em; /* Slightly larger city name */
+    margin-bottom: 0.5em;
+    color: #d1d8e0; /* Off-white for city name */
+}
+
+.temp {
+    font-size: 3.5em; /* Larger temperature */
+    font-weight: bold;
+    margin-bottom: 0.2em;
+    color: #f39c12; /* A warm, subtle orange for temperature */
+}
+
+.flex {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    gap: 15px; /* More space between items */
+    align-items: center;
+    margin-top: 1.5em;
+}
+
+.icon {
+    width: 90px; /* Larger icon */
+    height: 90px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4)); /* Subtle shadow for icon */
+}
+
+.description {
+    font-size: 1.2em;
+    text-transform: capitalize;
+    color: #aeb9c3; /* Muted gray for description */
+}
+
+.humidity,
+.wind {
+    font-size: 1em;
+    color: #aeb9c3; /* Muted gray for details */
+}
+
+.error {
+    display: none; /* Hidden by default */
+    color: #e74c3c; /* Red for error messages */
+    font-weight: bold;
+    margin-top: 1.5em;
+    font-size: 1.1em;
+    animation: fadeInError 0.5s ease-out;
+}
+
+@keyframes fadeInError {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 500px) {
+    .card {
+        padding: 2em 1.5em;
+        margin: 1em;
+        max-width: 90%;
+    }
+    .search {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .search-bar {
+        width: 100%;
+        padding: 0.6em 1em;
+    }
+    .search-btn {
+        margin-left: 0;
+        width: 100%;
+        padding: 0.6em 1em;
+    }
+    .city {
+        font-size: 1.8em;
+    }
+    .temp {
+        font-size: 3em;
+    }
+    .icon {
+        width: 70px;
+        height: 70px;
+    }
+    .description, .humidity, .wind {
+        font-size: 0.95em;
+    }
+}
